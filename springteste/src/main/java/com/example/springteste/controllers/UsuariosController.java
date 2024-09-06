@@ -28,10 +28,12 @@ public class UsuariosController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuariosRepository.save(usuariosModel));
     }
 
+
     @GetMapping("/usuarios")
     public ResponseEntity<List<UsuariosModel>> getAllUsuario(){
         return ResponseEntity.status(HttpStatus.OK).body(usuariosRepository.findAll());
     }
+
 
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<Object> getOneUsuario(@PathVariable(value = "id") Long id){
@@ -43,6 +45,7 @@ public class UsuariosController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioO.get());
     }
 
+
     @PutMapping("/usuarios/{id}")
     public ResponseEntity<Object> updateUsuario (@PathVariable(value = "id") Long id, @RequestBody @Valid UsuariosRecordDto usuariosRecordDto){
         Optional<UsuariosModel> usuariosO = usuariosRepository.findById(id);
@@ -53,6 +56,7 @@ public class UsuariosController {
         BeanUtils.copyProperties(usuariosRecordDto, usuariosModel);
         return ResponseEntity.status(HttpStatus.OK).body(usuariosRepository.save(usuariosModel));
          }
+
 
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Object> deleteUsuario (@PathVariable (value = "id") Long id, @RequestBody @Valid UsuariosRecordDto usuariosRecordDto) {
