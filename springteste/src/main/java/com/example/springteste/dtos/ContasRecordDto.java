@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public record ContasRecordDto (@NotBlank String nomeConta, @NotNull BigDecimal SaldoInicial){
+public record ContasRecordDto (@NotBlank String nome, @NotNull BigDecimal saldo){
 
 }

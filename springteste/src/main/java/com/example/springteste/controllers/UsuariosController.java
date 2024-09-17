@@ -19,8 +19,9 @@ import java.util.Optional;
 public class UsuariosController {
 
     @Autowired
-    UsuariosRepository usuariosRepository;
+    private UsuariosRepository usuariosRepository;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/usuarios")
     public ResponseEntity<UsuariosModel> saveUsuario(@RequestBody @Valid UsuariosRecordDto usuariosRecordDto) {
         var usuariosModel = new UsuariosModel();
@@ -28,13 +29,13 @@ public class UsuariosController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuariosRepository.save(usuariosModel));
     }
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/usuarios")
     public ResponseEntity<List<UsuariosModel>> getAllUsuario(){
         return ResponseEntity.status(HttpStatus.OK).body(usuariosRepository.findAll());
     }
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<Object> getOneUsuario(@PathVariable(value = "id") Long id){
 
@@ -45,7 +46,7 @@ public class UsuariosController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioO.get());
     }
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/usuarios/{id}")
     public ResponseEntity<Object> updateUsuario (@PathVariable(value = "id") Long id, @RequestBody @Valid UsuariosRecordDto usuariosRecordDto){
         Optional<UsuariosModel> usuariosO = usuariosRepository.findById(id);
@@ -55,9 +56,9 @@ public class UsuariosController {
         var usuariosModel = usuariosO.get();
         BeanUtils.copyProperties(usuariosRecordDto, usuariosModel);
         return ResponseEntity.status(HttpStatus.OK).body(usuariosRepository.save(usuariosModel));
-         }
+    }
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Object> deleteUsuario (@PathVariable (value = "id") Long id, @RequestBody @Valid UsuariosRecordDto usuariosRecordDto) {
         Optional<UsuariosModel> usuariosO = usuariosRepository.findById(id);

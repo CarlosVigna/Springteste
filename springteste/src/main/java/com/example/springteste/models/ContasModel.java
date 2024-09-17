@@ -1,6 +1,8 @@
 package com.example.springteste.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -12,15 +14,19 @@ import java.util.Set;
 @Table(name="contas")
 public class ContasModel implements Serializable {
 
-    private static final long serialVersionUTD = 1L;
+    private static final Long serialVersionUTD = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_conta")
     private Long id;
-    private String nomeConta;
-    private BigDecimal saldoInicial;
+    @Column(name = "nome_conta")
+    private String nome;
+    @Column(name = "saldo_inicial")
+    private BigDecimal saldo;
 
     @ManyToMany(mappedBy = "contas")
+    @JsonManagedReference
 
     private Set<UsuariosModel> usuarios = new HashSet<>();
 
@@ -41,20 +47,20 @@ public class ContasModel implements Serializable {
         this.id = id;
     }
 
-    public BigDecimal getSaldoInicial() {
-        return saldoInicial;
+    public BigDecimal getSaldo() {
+        return saldo;
     }
 
-    public void setSaldoInicial(BigDecimal saldoInicial) {
-        this.saldoInicial = saldoInicial;
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
     }
 
-    public String getNomeConta() {
-        return nomeConta;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeConta(String nomeConta) {
-        this.nomeConta = nomeConta;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void addUsuario(UsuariosModel usuariosModel) {

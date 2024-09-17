@@ -1,6 +1,8 @@
 package com.example.springteste.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -21,10 +23,11 @@ public class UsuariosModel implements Serializable {
     private String senha;
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
-            name = "usuariosContas",
-            joinColumns = @JoinColumn(name = "usuarioId"),
-            inverseJoinColumns = @JoinColumn(name = "contaId")
+            name = "usuarios_contas",
+            joinColumns = @JoinColumn(name = "id_usuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_conta")
     )
 
     private Set<ContasModel> contas = new HashSet<>();
