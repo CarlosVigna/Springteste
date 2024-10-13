@@ -4,14 +4,19 @@ package com.example.springteste.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
-public class UsuariosModel implements Serializable {
+public class UsuariosModel implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,6 +26,7 @@ public class UsuariosModel implements Serializable {
     private String nome;
     private String email;
     private String senha;
+    private RegrasUsuarios regra;
 
     @ManyToMany
     @JsonIgnore
@@ -31,6 +37,21 @@ public class UsuariosModel implements Serializable {
     )
 
     private Set<ContasModel> contas = new HashSet<>();
+
+    public UsuariosModel(RegrasUsuarios regra) {
+        this.regra = regra;
+    }
+
+    public UsuariosModel(String nome, String email, String senha, RegrasUsuarios regra){
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.regra = regra;
+    }
+
+    public UsuariosModel() {
+
+    }
 
 
 
@@ -74,6 +95,14 @@ public class UsuariosModel implements Serializable {
         this.email = email;
     }
 
+    public RegrasUsuarios getRegra() {
+        return regra;
+    }
+
+    public void setRegra(RegrasUsuarios regra) {
+        this.regra = regra;
+    }
+
     public void addConta(ContasModel contasModel) {
         this.contas.add(contasModel);
         contasModel.getUsuarios().add(this);
@@ -82,5 +111,42 @@ public class UsuariosModel implements Serializable {
     public void removeConta(ContasModel contasModel) {
         this.contas.remove(contasModel);
         contasModel.getUsuarios().remove(this);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.regra == RegrasUsuarios.ADMIN)
+            return List.of(new SimpleGrantedAuthority("REGRA_ADMIN"), new SimpleGrantedAuthority("REGRA_USUARIO"));
+            else return List.of(new SimpleGrantedAuthority("REGRA_USUARIO"));
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
