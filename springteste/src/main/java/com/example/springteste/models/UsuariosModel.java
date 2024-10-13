@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "usuarios")
 public class UsuariosModel implements Serializable {
 
-    private static final long serialVersionUTD = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue (strategy= GenerationType.IDENTITY)

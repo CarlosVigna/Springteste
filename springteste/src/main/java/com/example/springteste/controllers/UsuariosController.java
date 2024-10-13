@@ -67,7 +67,7 @@ public class UsuariosController {
         }
 
         usuariosRepository.delete(usuariosO.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).body("Usuário deletado com sucesso!");
     }
 
 }

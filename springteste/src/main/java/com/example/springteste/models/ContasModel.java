@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name="contas")
 public class ContasModel implements Serializable {
 
-    private static final Long serialVersionUTD = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
